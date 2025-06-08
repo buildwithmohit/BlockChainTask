@@ -1,0 +1,68 @@
+const crypto = require('crypto');
+
+class Block {
+  constructor(index, timestamp, data, previousHash = '') {
+    this.index = index;
+    this.timestamp = timestamp;
+    this.data = data;
+    this.previousHash = previousHash;
+    this.nonce = 0;
+    this.hash = this.calculateHash();
+  }
+
+  calculateHash() {
+    const blockString = this.index + this.timestamp + JSON.stringify(this.data) + this.previousHash + this.nonce;
+    return crypto.createHash('sha256').update(blockString).digest('hex');
+  }
+
+  mineBlock(difficulty) {
+    const target = '0'.repeat(difficulty);
+    const startTime = Date.now();
+
+    while (this.hash.substring(0, difficulty) !== target) {
+      this.nonce++;
+      this.hash = this.calculateHash();
+    }
+
+    const endTime = Date.now();
+    const timeTaken = (endTime - startTime) / 1000; // seconds
+    console.log(`Block mined: ${this.hash} (nonce: ${this.nonce})`);
+    console.log(`Mining took ${timeTaken.toFixed(3)} seconds and ${this.nonce} nonce attempts.`);
+  }
+}
+
+// Blockchain array
+const blockchain = [];
+
+// Difficulty level: number of leading zeros required in hash
+const difficulty = 4;
+
+// Create genesis block and mine it
+const genesisBlock = new Block(0, Date.now(), "Genesis Block", "0");
+console.log("Mining genesis block...");
+genesisBlock.mineBlock(difficulty);
+blockchain.push(genesisBlock);
+
+// Create and mine second block
+const block1 = new Block(1, Date.now(), "Second Block Data", blockchain[blockchain.length - 1].hash);
+console.log("Mining block 1...");
+block1.mineBlock(difficulty);
+blockchain.push(block1);
+
+// Create and mine third block
+const block2 = new Block(2, Date.now(), "Third Block Data", blockchain[blockchain.length - 1].hash);
+console.log("Mining block 2...");
+block2.mineBlock(difficulty);
+blockchain.push(block2);
+
+// Display the blockchain
+console.log("\n=== Blockchain ===");
+blockchain.forEach(block => {
+  console.log(`Block Index   : ${block.index}`);
+  console.log(`Timestamp     : ${new Date(block.timestamp).toLocaleString()}`);
+  console.log(`Data          : ${block.data}`);
+  console.log(`Previous Hash : ${block.previousHash}`);
+  console.log(`Hash          : ${block.hash}`);
+  console.log(`Nonce         : ${block.nonce}`);
+  console.log('-------------------------------------------');
+});
