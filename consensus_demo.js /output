@@ -1,11 +1,11 @@
-// --- PoW Miner (Proof of Work) ---
+// PoW Miner (Proof of Work)
 const miners = [
   { id: 'Miner1', power: Math.floor(Math.random() * 100) },
   { id: 'Miner2', power: Math.floor(Math.random() * 100) },
   { id: 'Miner3', power: Math.floor(Math.random() * 100) }
 ];
 
-// Select miner with highest power
+
 const powWinner = miners.reduce((max, miner) => miner.power > max.power ? miner : max, miners[0]);
 
 console.log("=== Proof of Work (PoW) ===");
@@ -13,14 +13,14 @@ miners.forEach(m => console.log(`${m.id} - Power: ${m.power}`));
 console.log(`Selection Logic: In PoW, the miner with the highest computational power wins.`);
 console.log(`Selected Validator: ${powWinner.id} with power ${powWinner.power}\n`);
 
-// --- PoS Staker (Proof of Stake) ---
+// PoS Staker (Proof of Stake) 
 const stakers = [
   { id: 'Staker1', stake: Math.floor(Math.random() * 1000) },
   { id: 'Staker2', stake: Math.floor(Math.random() * 1000) },
   { id: 'Staker3', stake: Math.floor(Math.random() * 1000) }
 ];
 
-// Select staker with highest stake
+
 const posWinner = stakers.reduce((max, staker) => staker.stake > max.stake ? staker : max, stakers[0]);
 
 console.log("=== Proof of Stake (PoS) ===");
@@ -28,8 +28,7 @@ stakers.forEach(s => console.log(`${s.id} - Stake: ${s.stake}`));
 console.log(`Selection Logic: In PoS, the validator with the highest stake (amount of tokens locked) wins.`);
 console.log(`Selected Validator: ${posWinner.id} with stake ${posWinner.stake}\n`);
 
-// --- DPoS Delegates and Voters (Delegated Proof of Stake) ---
-// 3 delegates
+//  DPoS Delegates and Voters (Delegated Proof of Stake) 
 const delegates = [
   { id: 'Delegate1', votes: 0 },
   { id: 'Delegate2', votes: 0 },
