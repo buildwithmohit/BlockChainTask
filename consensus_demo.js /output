@@ -1,0 +1,62 @@
+// --- PoW Miner (Proof of Work) ---
+const miners = [
+  { id: 'Miner1', power: Math.floor(Math.random() * 100) },
+  { id: 'Miner2', power: Math.floor(Math.random() * 100) },
+  { id: 'Miner3', power: Math.floor(Math.random() * 100) }
+];
+
+// Select miner with highest power
+const powWinner = miners.reduce((max, miner) => miner.power > max.power ? miner : max, miners[0]);
+
+console.log("=== Proof of Work (PoW) ===");
+miners.forEach(m => console.log(`${m.id} - Power: ${m.power}`));
+console.log(`Selection Logic: In PoW, the miner with the highest computational power wins.`);
+console.log(`Selected Validator: ${powWinner.id} with power ${powWinner.power}\n`);
+
+// --- PoS Staker (Proof of Stake) ---
+const stakers = [
+  { id: 'Staker1', stake: Math.floor(Math.random() * 1000) },
+  { id: 'Staker2', stake: Math.floor(Math.random() * 1000) },
+  { id: 'Staker3', stake: Math.floor(Math.random() * 1000) }
+];
+
+// Select staker with highest stake
+const posWinner = stakers.reduce((max, staker) => staker.stake > max.stake ? staker : max, stakers[0]);
+
+console.log("=== Proof of Stake (PoS) ===");
+stakers.forEach(s => console.log(`${s.id} - Stake: ${s.stake}`));
+console.log(`Selection Logic: In PoS, the validator with the highest stake (amount of tokens locked) wins.`);
+console.log(`Selected Validator: ${posWinner.id} with stake ${posWinner.stake}\n`);
+
+// --- DPoS Delegates and Voters (Delegated Proof of Stake) ---
+// 3 delegates
+const delegates = [
+  { id: 'Delegate1', votes: 0 },
+  { id: 'Delegate2', votes: 0 },
+  { id: 'Delegate3', votes: 0 }
+];
+
+// 3 voters randomly voting for delegates
+const voters = [
+  { id: 'Voter1', vote: null },
+  { id: 'Voter2', vote: null },
+  { id: 'Voter3', vote: null }
+];
+
+// Each voter randomly votes for a delegate
+voters.forEach(voter => {
+  const voteIndex = Math.floor(Math.random() * delegates.length);
+  voter.vote = delegates[voteIndex].id;
+  delegates[voteIndex].votes++;
+});
+
+const maxVotes = Math.max(...delegates.map(d => d.votes));
+const topDelegates = delegates.filter(d => d.votes === maxVotes);
+const dposWinner = topDelegates[Math.floor(Math.random() * topDelegates.length)];
+
+console.log("=== Delegated Proof of Stake (DPoS) ===");
+delegates.forEach(d => console.log(`${d.id} - Votes: ${d.votes}`));
+console.log("Votes by Voters:");
+voters.forEach(v => console.log(`${v.id} voted for ${v.vote}`));
+console.log(`Selection Logic: In DPoS, delegates with the most votes are eligible; if tied, one is randomly chosen.`);
+console.log(`Selected Validator: ${dposWinner.id} with votes ${dposWinner.votes}`);
