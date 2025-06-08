@@ -31,31 +31,30 @@ class Block {
   }
 }
 
-// Blockchain array
+
 const blockchain = [];
 
-// Difficulty level: number of leading zeros required in hash
 const difficulty = 4;
 
-// Create genesis block and mine it
+
 const genesisBlock = new Block(0, Date.now(), "Genesis Block", "0");
 console.log("Mining genesis block...");
 genesisBlock.mineBlock(difficulty);
 blockchain.push(genesisBlock);
 
-// Create and mine second block
+
 const block1 = new Block(1, Date.now(), "Second Block Data", blockchain[blockchain.length - 1].hash);
 console.log("Mining block 1...");
 block1.mineBlock(difficulty);
 blockchain.push(block1);
 
-// Create and mine third block
+
 const block2 = new Block(2, Date.now(), "Third Block Data", blockchain[blockchain.length - 1].hash);
 console.log("Mining block 2...");
 block2.mineBlock(difficulty);
 blockchain.push(block2);
 
-// Display the blockchain
+
 console.log("\n=== Blockchain ===");
 blockchain.forEach(block => {
   console.log(`Block Index   : ${block.index}`);
